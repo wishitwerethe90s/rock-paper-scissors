@@ -31,7 +31,6 @@ function playerSelect() {
         return 2;
     }
     
-    console.log("invalid response. choose either rock, paper or scissors.");
     return null;
 }
 
@@ -39,6 +38,7 @@ function playRound(computerSelection, playerSelection) {
 
     if (computerSelection === playerSelection) {
         return 2;
+        
     }
     else if(computerSelection === 0) { //  ROCK
         if(playerSelection === 2) { //  SCISSORS
@@ -69,23 +69,29 @@ function playRound(computerSelection, playerSelection) {
 function game() {
     let playerScore=0, compScore=0;
 
-    for(let i = 0; i<5; i++) {
+    for(let i=0; i<5; i++) {
         playerSelection = playerSelect();
         computerSelection = computerPlay();
 
-        if(!playerSelection) {
-            i--;   // in case of invalid response, the round is replayed.
-            continue;
+        while(playerSelection === null) {
+            console.log("invalid response. choose either rock, paper or scissors.");
+            playerSelection = playerSelect();
+            computerSelection = computerPlay();
         }
 
-        if(playRound(computerSelection, playerSelection) === 0) {
-            compscore++;
+        let result = playRound(computerSelection, playerSelection);
+
+        while(result === 2) {
+            console.log("tie! replay round!")
+            result = playRound(computerPlay(), playerSelect());
         }
-        else if(playRound(computerSelection, playerSelection) === 1) {
-            playerScore++;
-        }
-        else if(playRound(computerSelection, playerSelection) === 2) {
+
+        if(result === 0) {
+            console.log("computer won this round!")
             compScore++;
+        }
+        else if(result === 1) {
+            console.log("you won this round!")
             playerScore++;
         }
     }   
