@@ -97,3 +97,6 @@ function game() {
         prompt(`You lost! :(\nComputer: ${compScore}, You: ${playerScore}`);
     }
 }
+
+
+game();
